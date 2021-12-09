@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-import {KeyboardAvoidingView, Platform, StyleSheet, Text, View, TextInput, Touchable, TouchableOpacity, Keyboard,ScrollView } from "react-native";
+import {KeyboardAvoidingView, Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard,ScrollView } from "react-native";
 import { Icon } from 'react-native-elements';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Task from './components/Tasks';
 
 export default function Tasks_screen({ route, navigation }) {
@@ -25,28 +23,29 @@ export default function Tasks_screen({ route, navigation }) {
           <View style={styles.container}>
             <View style={styles.taskWrapper}>
               <Text style={styles.taskTitle}>{group}</Text>
-            <ScrollView>
-              <View style={styles.TaskItems}>
-               {
-                 taskGroups.map((task, index) =>{
-                   return <TouchableOpacity style={styles.task} key={index} onPress={() => navigation.navigate('Tasks')}>
-                        <Task text={task} />
-                        <TouchableOpacity onPress={()=>deleteTask(index)}>
-                            <Icon
-                                  reverse
-                                  name='trash'
-                                  type='entypo'
-                                  color='#517fa4'
-                                  size={12}
-                              />
-                        </TouchableOpacity>
-                   </TouchableOpacity>
-                 })
-               }
-              </View>
-            </ScrollView>
+              <ScrollView>
+                
+                <View style={styles.TaskItems}>
+                {
+                  taskGroups.map((task, index) =>{
+                    return <View style={styles.task} key={index} onPress={() => navigation.navigate('Tasks') }>
+                          <Task text={task} />
+                          <TouchableOpacity onPress={()=>deleteTask(index)}>
+                              <Icon
+                                    reverse
+                                    name='trash'
+                                    type='entypo'
+                                    color='#517fa4'
+                                    size={12}
+                                />
+                          </TouchableOpacity>
+                    </View>
+                  })
+                }
+                </View>
+              </ScrollView>
             </View>
-            
+           <View> 
             <KeyboardAvoidingView
               behavior= {Platform.OS === "android" ? "padding" : "height"}
               style={styles.writeTaskWrapper}
@@ -63,6 +62,7 @@ export default function Tasks_screen({ route, navigation }) {
                   </View>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
+            </View>
           </View>
         );
       
@@ -76,7 +76,7 @@ export default function Tasks_screen({ route, navigation }) {
         flex: 1,
         paddingTop: 5,
         paddingHorizontal:20,
-        bottom:90,
+        marginBottom:90,
     },
     task:{
         backgroundColor:'#dfdfdf',
@@ -91,24 +91,24 @@ export default function Tasks_screen({ route, navigation }) {
       fontSize: 24,
       fontWeight: 'bold',
     },
-    writeTaskWrapper:{
-        flex: 1,
-        position:'absolute',
-        bottom: 10,
-        width:'100%',
-        flexDirection:"row",
-        justifyContent : "space-between",
-        alignItems:"center",
-        backgroundColor: '#fff',
+  writeTaskWrapper:{
+      flex: 1,
+      position:'absolute',
+      bottom: 10,
+      width:'100%',
+      flexDirection:"row",
+      justifyContent : "space-between",
+      alignItems:"center",
+      backgroundColor: '#fff',
       },
-    input:{
-        paddingHorizontal: 25,
-        paddingVertical:20,
-        backgroundColor:'#ddd',
-        borderRadius:60,
-        width:'75%',
-        borderColor:'#aaa',
-        borderWidth:1,
+  input:{
+      paddingHorizontal: 25,
+      paddingVertical:20,
+      backgroundColor:'#ddd',
+      borderRadius:60,
+      width:'75%',
+      borderColor:'#aaa',
+      borderWidth:1,
     },
   
   })

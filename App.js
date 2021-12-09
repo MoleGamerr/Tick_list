@@ -73,7 +73,7 @@ export default function App() {
   return (
       <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} style={styles.container}/>
         <Stack.Screen name="Tasks" component={Tasks_screen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -82,14 +82,14 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex:1,
     backgroundColor: '#fff',
   },
   groupWrapper:{
-    flex: 1,
+    flex:1,
     paddingTop: 5,
     paddingHorizontal:20,
-    bottom:90,
+    marginBottom:90,
   },
   group:{
     backgroundColor:'#dfdfdf',
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   writeGroupWrapper:{
-    flex: 1,
+    flex:1,
     position:'absolute',
     bottom: 10,
     width:'100%',
