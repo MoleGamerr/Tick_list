@@ -25,7 +25,7 @@ function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.groupWrapper}>
-        <Text style={styles.groupTitle}>Groups</Text>
+        <Text style={styles.groupTitle}> Groups</Text>
         <ScrollView>
         <View style={styles.GroupItems}>
          {
