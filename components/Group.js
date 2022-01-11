@@ -14,8 +14,8 @@ const Group = (props) => {
 const styles = StyleSheet.create({
     group:{
         backgroundColor:'#fff',
-        borderRadius:10,
-        padding:10,
+        borderRadius:15,
+        padding:12,
         flexDirection: 'row',
         alignItems:'center',
         justifyContent:'space-between',
