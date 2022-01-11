@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "tests",
-    "slug": "tests",
+    "name": "TickList",
+    "slug": "TickList",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/adaptive-icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.molegamerr.tests"
+      "package": "com.molegamerr.TickList"
     },
     "web": {
       "favicon": "./assets/favicon.png"

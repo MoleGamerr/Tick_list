@@ -1,9 +1,13 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {KeyboardAvoidingView, Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard,ScrollView } from "react-native";
 import { Icon } from 'react-native-elements';
 import Task from './components/Tasks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
 
 export default function Tasks_screen({ route, navigation }) {
+         
         const [task, setTask] = useState();
         const [taskGroups, setTaskGroups] = useState([]);
         const { group } = route.params;
@@ -16,9 +20,40 @@ export default function Tasks_screen({ route, navigation }) {
       
         const handleAddTask = () => {
           Keyboard.dismiss();
-          setTaskGroups([...taskGroups, task])
+          setTaskGroups([...taskGroups, group+":;-+" + task])
           setTask(null);
         }
+
+        
+        const storeData = async () => {
+          try {
+            const jsonValue = JSON.stringify(taskGroups)
+            await AsyncStorage.setItem(group, jsonValue)
+          } catch (e) {
+            // saving error
+          }
+        }
+        
+        
+        
+      const getData = async () => {
+        try {
+          const jsonValue = await AsyncStorage.getItem(group)
+          return jsonValue != null ? setTaskGroups(JSON.parse(jsonValue)) : null;
+        } catch(e) {
+          // error reading value
+        }
+      }
+        
+        useEffect (() => {
+          getData();
+        },[]);
+        
+        useEffect (() => {
+          storeData();
+        },[taskGroups]);
+      
+
         return (
           <View style={styles.container}>
             <View style={styles.taskWrapper}>
@@ -28,8 +63,9 @@ export default function Tasks_screen({ route, navigation }) {
                 <View style={styles.TaskItems}>
                 {
                   taskGroups.map((task, index) =>{
-                    return <View style={styles.task} key={index} onPress={() => navigation.navigate('Tasks') }>
-                          <Task text={task} />
+                    if (task.split(":;")[0]==group) {
+                      return <View style={styles.task} key={index} onPress={() => navigation.navigate('Tasks') }>
+                          <Task text={task.split(":;-+")[1]} />
                           <TouchableOpacity onPress={()=>deleteTask(index)}>
                               <Icon
                                     reverse
@@ -40,6 +76,8 @@ export default function Tasks_screen({ route, navigation }) {
                                 />
                           </TouchableOpacity>
                     </View>
+                    }
+                    
                   })
                 }
                 </View>

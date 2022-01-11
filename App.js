@@ -1,13 +1,17 @@
-import React, {useState} from "react";
-import {KeyboardAvoidingView, Platform, StyleSheet, Text, View, TextInput, Touchable, TouchableOpacity, Keyboard,ScrollView } from "react-native";
+import React, {useEffect, useState} from "react";
+import {KeyboardAvoidingView, Platform, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard,ScrollView } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Icon } from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Group from './components/Group';
 import Tasks_screen from "./Tasks_screen";
 
 
 function HomeScreen({ navigation }) {
+
+  
+
   const [task, setTask] = useState();
   const [taskGroups, setTaskGroups] = useState([]);
 
@@ -19,9 +23,39 @@ function HomeScreen({ navigation }) {
 
   const handleAddTask = () => {
     Keyboard.dismiss();
-    setTaskGroups([...taskGroups, task])
-    setTask(null);
+      setTaskGroups([...taskGroups, task]);
+      setTask(null);
   }
+
+  const storeData = async () => {
+    try {
+      const jsonValue = JSON.stringify(taskGroups)
+      await AsyncStorage.setItem('groups', jsonValue)
+    } catch (e) {
+      // saving error
+    }
+  }
+  
+  
+  
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('groups')
+    return jsonValue != null ? setTaskGroups(JSON.parse(jsonValue)) : null;
+  } catch(e) {
+    // error reading value
+  }
+}
+  
+  useEffect (() => {
+    getData();
+  },[]);
+  
+  useEffect (() => {
+    storeData();
+  },[taskGroups]);
+
+
   return (
     <View style={styles.container}>
       <View style={styles.groupWrapper}>
