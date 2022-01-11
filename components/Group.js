@@ -13,7 +13,7 @@ const Group = (props) => {
 
 const styles = StyleSheet.create({
     group:{
-        backgroundColor:'#f00',
+        backgroundColor:'#f0f',
         borderRadius:10,
         padding:10,
         flexDirection: 'row',
